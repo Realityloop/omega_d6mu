@@ -81,7 +81,7 @@ function omega_d6mu_preprocess_page(&$vars, $hook) {
   if (!file_exists($path)) {
     // If the path to the header image is still the default as defined in omega_d6mu.info, then we need to prepend the them path.
     // In any other case the path will be to a file in the files directory.
-    $path = drupal_get_path('theme', 'omega_d6mu') . $path;
+    $path = '/'. path_to_theme() .'/'. $path;
   }
   $vars['header_img'] = 'style="background-image: url(' . $path . ');"';
   
