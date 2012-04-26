@@ -22,7 +22,7 @@ if (theme_get_setting('omega_d6mu_fixed')) {
 function omega_d6mu_theme(&$existing, $type, $theme, $path) {
   $hooks = omega_theme($existing, $type, $theme, $path);
   // Add your theme hooks like this:
-  
+
   $hooks['omega_d6mu_local_footer'] = array(
     'variables' => array(
       'footer_title' => NULL,
@@ -41,7 +41,7 @@ function omega_d6mu_theme(&$existing, $type, $theme, $path) {
     ),
     'template' => 'templates/omega-d6mu-local-footer'
   );
-  
+
   $hooks['omega_d6mu_heading_text'] = array(
     'variables' => array(
       'heading_label' => NULL,
@@ -49,7 +49,7 @@ function omega_d6mu_theme(&$existing, $type, $theme, $path) {
     ),
     'template' => 'templates/omega-d6mu-heading-text'
   );
-  
+
   // @TODO: Needs detailed comments. Patches welcome!
   return $hooks;
 }
@@ -84,7 +84,7 @@ function omega_d6mu_preprocess_page(&$vars, $hook) {
     $path = '/'. path_to_theme() .'/'. $path;
   }
   $vars['header_img'] = 'style="background-image: url(' . $path . ');"';
-  
+
   $vars['local_footer'] = theme('omega_d6mu_local_footer');
   $vars['heading_text'] = theme('omega_d6mu_heading_text');
 }
@@ -98,7 +98,7 @@ function omega_d6mu_preprocess_omega_d6mu_heading_text(&$vars) {
   if (!$vars['heading_label']) {
     $vars['heading_label'] = theme_get_setting('omega_d6mu_heading_label');
   }
-  
+
   if (!$vars['heading_text']) {
     $vars['heading_text'] = theme_get_setting('omega_d6mu_heading_text');
   }
@@ -110,45 +110,68 @@ function omega_d6mu_preprocess_omega_d6mu_heading_text(&$vars) {
  * See templates/omega-d6mu-local-footer.tpl.php
  */
 function omega_d6mu_preprocess_omega_d6mu_local_footer(&$vars) {
-  
+
   if (!$vars['footer_title']) {
     $vars['footer_title'] = theme_get_setting('omega_d6mu_footer_title');
   }
-  
+
   if (!$vars['org_name']) {
     $vars['org_name'] = theme_get_setting('omega_d6mu_org_name');
   }
-  
+
   if (!$vars['org_location_1']) {
     $vars['org_location_1'] = theme_get_setting('omega_d6mu_org_location_1');
   }
-  
+
   if (!$vars['org_location_2']) {
     $vars['org_location_2'] = theme_get_setting('omega_d6mu_org_location_2');
   }
-  
+
   if (!$vars['org_location_3']) {
     $vars['org_location_3'] = theme_get_setting('omega_d6mu_org_location_3');
   }
-  
+
   if (!$vars['phone']) {
     $vars['phone'] = theme_get_setting('omega_d6mu_phone');
   }
-  
+
   if (!$vars['fax']) {
     $vars['fax'] = theme_get_setting('omega_d6mu_fax');
   }
-  
+
   if (!$vars['email_link']) {
-    $vars['email_link'] = l('Make an enquiry', theme_get_setting('omega_d6mu_email_link'));
+    if (strpos(theme_get_setting('omega_d6mu_email_link'), ":")) {
+      $text = explode(":", theme_get_setting('omega_d6mu_email_link'));
+      $text = $text[1];
+    }
+    else {
+      $text = 'Make an enquiry';
+    }
+    if (theme_get_setting('omega_d6mu_email_link')) {
+      $vars['email_link'] = '<strong>' . t('Contact:') . '</strong>' . l($text, theme_get_setting('omega_d6mu_email_link'));
+    }
+    else {
+      $vars['email_link'] = NULL;
+    }
   }
-  
+
   if (!$vars['fb_url']) {
-    $vars['fb_url'] = l('Facebook', theme_get_setting('omega_d6mu_fb_url'), array('attributes' => array('class' => 'facebook')));
+    if (theme_get_setting('omega_d6mu_fb_url')) {
+      $vars['fb_url'] = l('Facebook', theme_get_setting('omega_d6mu_fb_url'), array('attributes' => array('class' => 'facebook')));
+    }
+    else {
+      $vars['fb_url'] = NULL;
+    }
   }
-  
+
   if (!$vars['twitter_url']) {
-    $vars['twitter_url'] = l('Twitter', theme_get_setting('omega_d6mu_twitter_url'), array('attributes' => array('class' => 'twitter')));
+    if (theme_get_setting('omega_d6mu_twitter_url')) {
+      $vars['twitter_url'] = l('Twitter', theme_get_setting('omega_d6mu_twitter_url'), array('attributes' => array('class' => 'twitter')));
+    }
+    else {
+      $vars['twitter_url'] =  NULL;
+    }
+
   }
 
   if (!$vars['authoriser']) {
@@ -165,7 +188,7 @@ function omega_d6mu_preprocess_omega_d6mu_local_footer(&$vars) {
 
   if (!$vars['modified']) {
     $vars['modified'] = theme_get_setting('omega_d6mu_modified');
-  }  
+  }
 }
 
 /**
@@ -213,12 +236,12 @@ function omega_d6mu_preprocess_block(&$vars, $hook) {
 
 /**
  * Create a string of attributes form a provided array.
- * 
+ *
  * @param $attributes
  * @return string
  */
 function omega_d6mu_render_attributes($attributes) {
-	return omega_render_attributes($attributes);  
+	return omega_render_attributes($attributes);
 }
 
 function omega_d6mu_menu_item($link, $has_children, $menu = '', $in_active_trail = FALSE, $extra_class = NULL) {
@@ -229,10 +252,10 @@ function omega_d6mu_menu_item($link, $has_children, $menu = '', $in_active_trail
   if ($in_active_trail) {
     $class .= ' active-trail';
   }
-  
+
   if ($has_children) {
     $link .= '<span class="more" classname="more">More</span>';
   }
-  
+
   return '<li class="' . $class . '">' . $link . $menu . "</li>\n";
 }

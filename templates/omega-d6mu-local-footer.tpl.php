@@ -7,8 +7,8 @@
 <ul class="col-2">
   <li><strong><?php print t('Phone:'); ?></strong> <?php print $phone; ?></li>
   <li><strong><?php print t('Fax:'); ?></strong> <?php print $fax; ?></li>
-  <li><strong><?php print t('Email:'); ?></strong> <?php print $email_link; ?></li>
-  <li class="social"><?php print $fb_url; ?> <?php print $twitter_url; ?></li>
+  <li><?php print $email_link; ?></li>
+  <li class="social"><?php dpm($fb_url); print $fb_url; ?> <?php print $twitter_url; ?></li>
 </ul>
 
 <ul class="col-2">

@@ -14,35 +14,35 @@ include_once './' . drupal_get_path('theme', 'omega') . '/theme-settings.php';
  */
 function omega_d6mu_settings($saved_settings) {
   $form = array();
-  
+
   // Get the default values from the .info file.
   $subtheme_defaults = omega_theme_get_default_settings('omega_d6mu');
-  
+
   // CUSTOM THEME SETTINGS
   $form += omega_d6mu_custom_settings($saved_settings, $subtheme_defaults);
-  
+
   // OMEGA THEME SETTINGS
   $form += omega_settings($saved_settings, $subtheme_defaults);
-  
+
   // Return the form
   return $form;
 }
 
 function omega_d6mu_custom_settings($saved_settings, $subtheme_defaults) {
   $form = array();
-  
+
   // Get the default values from the .info file.
   if (count($subtheme_defaults) > 0) {
     // Allow a subtheme to override the default values.
     $settings = array_merge($subtheme_defaults, $saved_settings);
-    
+
   }
   else {
     // Merge the saved variables and their default values.
     $defaults = omega_theme_get_default_settings('omega_d6mu');
     $settings = array_merge($defaults, $saved_settings);
   }
-  
+
   $form['omega_d6mu_container'] = array(
     '#type' => 'fieldset',
     '#title' => t('Melbourne University settings'),
@@ -147,10 +147,10 @@ function omega_d6mu_custom_settings($saved_settings, $subtheme_defaults) {
       // Email Link.
       $form['omega_d6mu_container']['omega_d6mu_local_footer']['omega_d6mu_email_link']= array(
         '#type' => 'textfield',
-        '#title' => t('Email Link Path'),
+        '#title' => t('Contact Link Path'),
         '#size' => 60,
         '#default_value' => $saved_settings['omega_d6mu_email_link'],
-        '#description'   => t('Enter a valid site path to which the "Make an enquiry" link will point to.'),
+        '#description'   => t('Enter an email address in the form mailto:mail@domain.com to list the email address, or enter a valid site contact link to display "Make an enquiry" as the link text.'),
       );
       // Facebook URL.
       $form['omega_d6mu_container']['omega_d6mu_local_footer']['omega_d6mu_fb_url']= array(
@@ -200,8 +200,8 @@ function omega_d6mu_custom_settings($saved_settings, $subtheme_defaults) {
         '#default_value' => $saved_settings['omega_d6mu_modified'],
         '#description'   => t('Enter a value for "Date Modified" in the local footer area.'),
       );
-      
-    
+
+
     // Header Images.
     $form['omega_d6mu_container']['header_img'] = array(
       '#type' => 'fieldset',
@@ -210,7 +210,7 @@ function omega_d6mu_custom_settings($saved_settings, $subtheme_defaults) {
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
-      
+
       // Home Page Header Image
       $form['omega_d6mu_container']['header_img']['omega_d6mu_header_img_front_path'] = array(
         '#type' => 'textfield',
@@ -222,7 +222,7 @@ function omega_d6mu_custom_settings($saved_settings, $subtheme_defaults) {
         '#title' => t('Upload home page header image'),
       );
       $form['omega_d6mu_container']['header_img']['omega_d6mu_header_img_front_upload']['#element_validate'][] = 'omega_d6mu_settings_header_img_front_submit';
-      
+
       // Secondary Pages Header Image
       $form['omega_d6mu_container']['header_img']['omega_d6mu_header_img_path'] = array(
         '#type' => 'textfield',
@@ -234,7 +234,7 @@ function omega_d6mu_custom_settings($saved_settings, $subtheme_defaults) {
         '#title' => t('Upload Secondary page header image'),
       );
       $form['omega_d6mu_container']['header_img']['omega_d6mu_header_img_upload']['#element_validate'][] = 'omega_d6mu_settings_header_img_submit';
-    
+
   // Return the form.
   return $form;
 }
