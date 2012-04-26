@@ -148,7 +148,7 @@ function omega_d6mu_preprocess_omega_d6mu_local_footer(&$vars) {
       $text = 'Make an enquiry';
     }
     if (theme_get_setting('omega_d6mu_email_link')) {
-      $vars['email_link'] = '<strong>' . t('Contact:') . '</strong>' . l($text, theme_get_setting('omega_d6mu_email_link'));
+      $vars['email_link'] = '<strong>' . t('Contact:') . '</strong> ' . l($text, theme_get_setting('omega_d6mu_email_link'));
     }
     else {
       $vars['email_link'] = NULL;
