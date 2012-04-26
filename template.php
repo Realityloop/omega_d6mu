@@ -78,7 +78,7 @@ function omega_d6mu_preprocess(&$vars, $hook) {
  */
 function omega_d6mu_preprocess_page(&$vars, $hook) {
   ($vars['is_front']) ? $path = theme_get_setting('omega_d6mu_header_img_front_path') : $path = theme_get_setting('omega_d6mu_header_img_path');
-  if (!file_exists($path)) {
+  if (!file_exists($_SERVER{'DOCUMENT_ROOT'} .$path)) {
     // If the path to the header image is still the default as defined in omega_d6mu.info, then we need to prepend the them path.
     // In any other case the path will be to a file in the files directory.
     $path = '/'. path_to_theme() .'/'. $path;
