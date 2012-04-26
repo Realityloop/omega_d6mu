@@ -79,9 +79,25 @@ function omega_d6mu_preprocess(&$vars, $hook) {
 function omega_d6mu_preprocess_page(&$vars, $hook) {
   ($vars['is_front']) ? $path = theme_get_setting('omega_d6mu_header_img_front_path') : $path = theme_get_setting('omega_d6mu_header_img_path');
   if (!file_exists($path)) {
-    // If the path to the header image is still the default as defined in omega_d6mu.info, then we need to prepend the them path.
-    // In any other case the path will be to a file in the files directory.
-    $path = '/'. path_to_theme() .'/'. $path;
+    if($path{0} != '/') {
+      if (file_exists(getcwd() .'/'. $path)) {
+        // If this is simply a relative URL, for instance to a file in the
+        // files directory, make it absolute.
+        $path = '/'. $path;
+      }
+      else {
+        // If the path to the header image is still the default as defined in
+        // omega_d6mu.info, then we need to prepend the theme path.
+        // In any other case the path will be to a file in the files directory.
+        $path = '/'. path_to_theme() .'/'. $path;
+      }
+    }
+    else {
+      // Absolute URL relative to theme path... just in case?
+      if (file_exists(path_to_theme() . $path)) {
+        $path = '/'. path_to_theme() . $path;
+      }
+    }
   }
   $vars['header_img'] = 'style="background-image: url(' . $path . ');"';
 
